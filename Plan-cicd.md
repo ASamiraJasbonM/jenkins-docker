@@ -13,9 +13,9 @@ Este documento explica cómo implementar el pipeline de CI/CD completo para el p
 
 | Archivo | Descripción |
 |---------|-------------|
-| `Jenkinsfile` | Pipeline principal de CI/CD |
-| `Dockerfile.backend` | Template para construir imagen Docker de Django |
-| `docker-compose.staging.yml` | Configuración de entorno staging |
+| `infra/Jenkinsfile` | Pipeline principal de CI/CD |
+| `infra/Dockerfile.backend` | Template para construir imagen Docker de Django |
+| `infra/docker-compose.staging.yml` | Configuración de entorno staging |
 | `docker-compose.yml` | Jenkins local para desarrollo |
 
 ### Repo 2: Mindy-pwa-capacitor (repositorio del proyecto)
@@ -26,9 +26,9 @@ Este documento explica cómo implementar el pipeline de CI/CD completo para el p
 | `backend/` | Código Django |
 | `frontend/` | Código PWA/Capacitor |
 | `requirements.txt` | Dependencias Python |
-| (copiar aquí) `Jenkinsfile` | Pipeline de CI/CD |
-| (copiar aquí) `Dockerfile.backend` | Para construir imagen |
-| (copiar aquí) `docker-compose.staging.yml` | Para staging |
+| `infra/Jenkinsfile` | Pipeline de CI/CD (copiar carpeta infra completa) |
+| `infra/Dockerfile.backend` | Para construir imagen |
+| `infra/docker-compose.staging.yml` | Para staging |
 
 ---
 
@@ -77,19 +77,20 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 ## Paso 2: Copiar archivos al repo de Mindy
 
-Copia estos archivos desde `jenkins-docker` al repositorio `Mindy-pwa-capacitor`:
+Copia la carpeta `infra/` completa desde `jenkins-docker` al repositorio `Mindy-pwa-capacitor`:
 
 ```
 jenkins-docker/                    →  Mindy-pwa-capacitor/
-├── Jenkinsfile                   →  (raíz) Jenkinsfile
-├── Dockerfile.backend            →  (raíz) Dockerfile.backend
-└── docker-compose.staging.yml    →  (raíz) docker-compose.staging.yml
+└── infra/                         →  (raíz) infra/
+    ├── Jenkinsfile               →  infra/Jenkinsfile
+    ├── Dockerfile.backend        →  infra/Dockerfile.backend
+    └── docker-compose.staging.yml →  infra/docker-compose.staging.yml
 ```
 
 ### O si prefieres, descarga directamente:
-- https://raw.githubusercontent.com/ASamiraJasbonM/jenkins-docker/main/Jenkinsfile
-- https://raw.githubusercontent.com/ASamiraJasbonM/jenkins-docker/main/Dockerfile.backend
-- https://raw.githubusercontent.com/ASamiraJasbonM/jenkins-docker/main/docker-compose.staging.yml
+- https://raw.githubusercontent.com/ASamiraJasbonM/jenkins-docker/main/infra/Jenkinsfile
+- https://raw.githubusercontent.com/ASamiraJasbonM/jenkins-docker/main/infra/Dockerfile.backend
+- https://raw.githubusercontent.com/ASamiraJasbonM/jenkins-docker/main/infra/docker-compose.staging.yml
 
 ---
 
@@ -107,7 +108,7 @@ SCM: Git
 Repository URL: https://github.com/ASamiraJasbonM/Mindy-pwa-capacitor.git
 Credentials: github-token
 Branches: */main
-Script Path: Jenkinsfile
+Script Path: infra/Jenkinsfile
 ```
 
 ### Opción B: Pipeline Inline
@@ -191,7 +192,7 @@ open http://localhost:8080
 
 ```bash
 # Probar staging localmente
-docker-compose -f docker-compose.staging.yml up -d
+docker-compose -f infra/docker-compose.staging.yml up -d
 
 # Ver logs del backend
 docker logs -f mindy-backend

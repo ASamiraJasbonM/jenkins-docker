@@ -48,10 +48,31 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 docker exec -it jenkins bash
 ```
 
-## Estructura
+## Estructura del Proyecto
 
-- `jenkins_home` se guarda en un volumen Docker persistente
-- Docker socket montado para permitir builds de contenedores
+```
+.
+├── docker-compose.yml          # Jenkins local para desarrollo
+├── infra/                      # Templates de CI/CD para Mindy
+│   ├── Jenkinsfile             # Pipeline de CI/CD
+│   ├── Dockerfile.backend      # Imagen Docker para Django
+│   └── docker-compose.staging.yml  # Entorno staging
+├── Makefile                   # Comandos útiles
+├── Plan-cicd.md              # Plan de implementación
+└── README.md
+```
+
+## Carpeta infra/
+
+Esta carpeta contiene los archivos necesarios para configurar el pipeline de CI/CD del proyecto Mindy:
+
+| Archivo | Descripción |
+|---------|-------------|
+| `Jenkinsfile` | Pipeline completo de CI/CD |
+| `Dockerfile.backend` | Template para construir imagen Docker |
+| `docker-compose.staging.yml` | Configuración de entorno staging |
+
+Para usar estos archivos en el proyecto Mindy, copia la carpeta `infra/` completa al repositorio del proyecto.
 
 ## Personalización
 

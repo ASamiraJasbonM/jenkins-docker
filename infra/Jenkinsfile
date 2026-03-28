@@ -125,7 +125,7 @@ pipeline {
                 script {
                     def imageTag = "${env.BUILD_NUMBER}"
                     sh """
-                        docker build -t mindy-backend:${imageTag} -f Dockerfile.backend .
+                        docker build -t mindy-backend:${imageTag} -f infra/Dockerfile.backend .
                         docker tag mindy-backend:${imageTag} ${DOCKER_REGISTRY}/mindy-backend:${imageTag}
                         docker push ${DOCKER_REGISTRY}/mindy-backend:${imageTag}
                     """
@@ -140,8 +140,8 @@ pipeline {
             steps {
                 echo 'Desplegando a staging...'
                 sh '''
-                    docker-compose -f docker-compose.staging.yml down
-                    docker-compose -f docker-compose.staging.yml up -d
+                    docker-compose -f infra/docker-compose.staging.yml down
+                    docker-compose -f infra/docker-compose.staging.yml up -d
                     sleep 10
                     docker exec mindy-backend python manage.py migrate
                 '''

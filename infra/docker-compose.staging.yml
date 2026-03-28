@@ -20,7 +20,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: infra/Dockerfile.backend
     environment:
       DEBUG: 'False'
       DATABASE_URL: postgresql://mindy_user:${DB_PASSWORD}@db:5432/mindy
