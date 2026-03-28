@@ -1,0 +1,12 @@
+# Datos de Jenkins (volumen)
+jenkins_data/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
